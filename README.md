@@ -1,0 +1,1 @@
+# node-typegraphql-typeorm-front
