@@ -1,15 +1,22 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import $ from 'jquery';
-import Popper from 'popper.js';
-import logo from './logo.svg';
-import NavBar from './components/NavBar';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import CategoryList from './components/category/CategoryList';
+import AddCategory from './components/category/AddCategory';
+import EditCategory from './components/category/EditCategory';
 import './App.css';
 
 function App() {
+  
   return (
     <div className="App">
-      <NavBar/>
+      <Router>
+        <Switch>
+          <Route path="/" component={CategoryList} exact />
+          <Route path="/category/add" component={AddCategory} />
+          <Route path="/category/edit/:id" component={EditCategory} />
+        </Switch>
+      </Router>
     </div>
   );
 }
