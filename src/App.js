@@ -15,6 +15,7 @@ function App() {
           <Route path="/" component={CategoryList} exact />
           <Route path="/category/add" component={AddCategory} />
           <Route path="/category/edit/:id" component={EditCategory} />
+          <Route path="*" component={CategoryList} />
         </Switch>
       </Router>
     </div>

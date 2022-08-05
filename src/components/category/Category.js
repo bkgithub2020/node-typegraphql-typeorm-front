@@ -1,12 +1,21 @@
 import {Link} from 'react-router-dom';
+import { useQuery, gql, useMutation } from "@apollo/client";
+
+const DELETE_CATEGORY = gql`
+  mutation DeleteCategory($id: String!){
+    deleteCategory(id: $id)
+  }
+`;
 
 const Category = (props) => {
 	let {id, category_name,primary_category_id} = props.category;
+	const [deleteCategory] = useMutation(DELETE_CATEGORY);
 	
 
 	  const deletehandler = (id) => {
+		id = id.toString();
 	    if (window.confirm("Are you sure want to delete product?")) {
-	      
+			deleteCategory({ variables: { id }});
 	    }
 	  };
 	return(

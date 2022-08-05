@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useQuery, gql } from "@apollo/client";
 import Table from "react-bootstrap/Table";
 import Category from "./Category";
-import Button from "react-bootstrap/Button";
 
 const CATEGORIES_QUERY = gql`
   {
