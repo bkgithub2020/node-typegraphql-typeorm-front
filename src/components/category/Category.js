@@ -14,6 +14,7 @@ const Category = (props) => {
 	const [deleteCategory] = useMutation(DELETE_CATEGORY, {
 		onCompleted: (data) => {
 		  toast.success("Category Deleted Successfully", ToastObjects);
+		  props.refetch()
 		},
 		onError: (error) => {
 		  toast.error(error.message, ToastObjects);

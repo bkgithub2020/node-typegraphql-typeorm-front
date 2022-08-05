@@ -104,6 +104,7 @@ function EditCategory({ match }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSubmitted(true); 
     const { category_name } = formState.values;
 
     if (category_name) {

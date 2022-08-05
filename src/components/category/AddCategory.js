@@ -80,6 +80,7 @@ function AddCategory() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSubmitted(true); 
     const { category_name, primary_category_id } = formState.values;
     if (category_name) {
       addCategory({

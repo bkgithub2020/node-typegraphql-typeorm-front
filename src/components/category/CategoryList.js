@@ -15,7 +15,7 @@ const CATEGORIES_QUERY = gql`
 `;
 
 function CategoryList() {
-  const { data, loading, error } = useQuery(CATEGORIES_QUERY);
+  const { data, loading, error,refetch } = useQuery(CATEGORIES_QUERY);
 
   if (loading) return "Loading...";
   if (error) return <pre>{error.message}</pre>;
@@ -42,7 +42,7 @@ function CategoryList() {
         </thead>
         <tbody>
           {categories.map((category) => (
-            <Category category={category} key={category.id} />
+            <Category category={category} key={category.id} refetch={refetch}/>
           ))}
         </tbody>
       </Table>
