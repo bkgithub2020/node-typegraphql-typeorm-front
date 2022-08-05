@@ -7,6 +7,8 @@ import Alert from "react-bootstrap/Alert";
 import { useQuery, gql, useMutation } from "@apollo/client";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import {ToastObjects} from "../LoadingError/toastObject";
 
 const CATEGORIES_QUERY = gql`
   {
@@ -48,7 +50,14 @@ function AddCategory() {
   });
   const [message, setMesasge] = useState("");
   const [errmessage, setErrmesasge] = useState("");
-  const [addCategory, ...addResponse] = useMutation(CREATE_CATEGORY);
+  const [addCategory, ...addResponse] = useMutation(CREATE_CATEGORY ,{
+    onCompleted: (data) => {
+        toast.success("Category Added Successfully", ToastObjects);
+    },
+    onError: (error) => {
+        toast.error(error.message, ToastObjects); 
+    },
+  });
   const addStatusError = addResponse.error;
 
   if (loading) return "Loading...";
@@ -76,7 +85,7 @@ function AddCategory() {
       addCategory({
         variables: {
           ...formState.values,
-          primary_category_id: parseInt(formState.values.primary_category_id),
+          primary_category_id: (formState.values.primary_category_id ? parseInt(formState.values.primary_category_id) : 0),
         },
       });
       setFormState({ values: {} });
@@ -89,7 +98,7 @@ function AddCategory() {
       <Row>
         <Col xs={6}>
           <div className="category-list-heading">
-            <h3>Update Category</h3>
+            <h3>Add Category</h3>
             <Link to="/" className="btn btn-outline-primary">
               Go Back
             </Link>

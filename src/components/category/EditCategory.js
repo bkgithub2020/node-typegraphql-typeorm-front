@@ -7,6 +7,8 @@ import Alert from "react-bootstrap/Alert";
 import { useQuery, gql, useMutation } from "@apollo/client";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import {ToastObjects} from "../LoadingError/toastObject";
 
 const CATEGORIES_QUERY = gql`
   {
@@ -73,7 +75,14 @@ function EditCategory({ match }) {
 
   const [message, setMesasge] = useState("");
   const [errmessage, setErrmesasge] = useState("");
-  const [updateCategory, ...updateResponse] = useMutation(UPDATE_CATEGORY);
+  const [updateCategory, ...updateResponse] = useMutation(UPDATE_CATEGORY, {
+    onCompleted: (data) => {
+      toast.success("Category Updated Successfully", ToastObjects);
+    },
+    onError: (error) => {
+      toast.error(error.message, ToastObjects);
+    },
+  });
 
   if (loading) return "Loading...";
   if (error) return <pre>{error.message}</pre>;

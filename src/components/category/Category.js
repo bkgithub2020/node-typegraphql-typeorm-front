@@ -1,5 +1,7 @@
 import {Link} from 'react-router-dom';
 import { useQuery, gql, useMutation } from "@apollo/client";
+import { toast } from "react-toastify";
+import {ToastObjects} from "../LoadingError/toastObject";
 
 const DELETE_CATEGORY = gql`
   mutation DeleteCategory($id: String!){
@@ -9,7 +11,14 @@ const DELETE_CATEGORY = gql`
 
 const Category = (props) => {
 	let {id, category_name,primary_category_id} = props.category;
-	const [deleteCategory] = useMutation(DELETE_CATEGORY);
+	const [deleteCategory] = useMutation(DELETE_CATEGORY, {
+		onCompleted: (data) => {
+		  toast.success("Category Deleted Successfully", ToastObjects);
+		},
+		onError: (error) => {
+		  toast.error(error.message, ToastObjects);
+		},
+	  });
 	
 
 	  const deletehandler = (id) => {
