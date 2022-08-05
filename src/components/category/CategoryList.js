@@ -29,8 +29,7 @@ function CategoryList() {
   });
 
   useEffect(()=>{
-    refetch();
-    console.log("Called useeffect")
+    refetch(); //Load new data first time page load
   },[])
 
   if (loading) return "Loading...";
