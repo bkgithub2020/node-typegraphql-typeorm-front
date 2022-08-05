@@ -42,7 +42,7 @@ const CREATE_CATEGORY = gql`
   }
 `;
 
-function AddCategory() {
+function AddCategory(props) {
   const { data, loading, error } = useQuery(CATEGORIES_QUERY);
   const [submitted, setSubmitted] = useState(false);
   const [formState, setFormState] = useState({

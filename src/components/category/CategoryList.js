@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import { useQuery, gql } from "@apollo/client";
 import Table from "react-bootstrap/Table";
 import Category from "./Category";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { ToastObjects } from "../LoadingError/toastObject";
 
 const CATEGORIES_QUERY = gql`
   {
@@ -15,12 +18,23 @@ const CATEGORIES_QUERY = gql`
 `;
 
 function CategoryList() {
-  const { data, loading, error,refetch } = useQuery(CATEGORIES_QUERY);
+  const [categories, setCategories] = useState([]);
+  const { data, loading, error, refetch } = useQuery(CATEGORIES_QUERY, {
+    onCompleted: (data) => {
+      setCategories(data.categories);
+    },
+    onError: (error) => {
+      toast.error(error.message, ToastObjects);
+    },
+  });
+
+  useEffect(()=>{
+    refetch();
+    console.log("Called useeffect")
+  },[])
 
   if (loading) return "Loading...";
   if (error) return <pre>{error.message}</pre>;
-
-  const categories = data.categories;
 
   return (
     <>
@@ -41,8 +55,8 @@ function CategoryList() {
           </tr>
         </thead>
         <tbody>
-          {categories.map((category) => (
-            <Category category={category} key={category.id} refetch={refetch}/>
+          {categories && categories.map((category) => (
+            <Category category={category} key={category.id} refetch={refetch} />
           ))}
         </tbody>
       </Table>
